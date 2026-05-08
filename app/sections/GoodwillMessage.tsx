@@ -1,26 +1,20 @@
 'use client'
 
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import Image from 'next/image'
 import { professors, sectionTitle } from '@/data/goodwillData'
 import type { ProfessorData } from '@/data/goodwillData'
 import DecryptedText from '@/components/ui/DecryptedText'
 import styles from './GoodwillMessage.module.css'
 
-const AUTO_ADVANCE_DURATION = 8000 // ms per slide
-const GLITCH_DURATION = 500        // ms for .systemUpdate class
+const GLITCH_DURATION = 500 // ms for .systemUpdate class
 const RING_CIRCUMFERENCE = 2 * Math.PI * 54 // r=54 on the progress ring
 
 const GoodwillMessage: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [progress, setProgress] = useState(0)          // 0–1
   const [glitching, setGlitching] = useState(false)
-  const [textKey, setTextKey] = useState(0)             // force re-mount text on swap
+  const [textKey, setTextKey] = useState(0) // force re-mount text on swap
   const [revealing, setRevealing] = useState(false)
-
-  const startTimeRef = useRef<number>(Date.now())
-  const rafRef = useRef<number>(0)
-  const sectionRef = useRef<HTMLElement>(null)
 
   const activeProfessor: ProfessorData = professors[activeIndex]
 
@@ -29,48 +23,21 @@ const GoodwillMessage: React.FC = () => {
     setTimeout(() => {
       setActiveIndex(nextIdx)
       setTextKey(k => k + 1)
-      setProgress(0)
-      startTimeRef.current = Date.now()
       setGlitching(false)
       setRevealing(true)
       setTimeout(() => setRevealing(false), 1200)
     }, GLITCH_DURATION)
   }, [])
 
-  // RAF-based progress ticker
-  useEffect(() => {
-    const tick = () => {
-      const elapsed = Date.now() - startTimeRef.current
-      const p = Math.min(elapsed / AUTO_ADVANCE_DURATION, 1)
-      setProgress(p)
-      if (p >= 1) {
-        const next = (activeIndex + 1) % professors.length
-        advanceTo(next)
-      } else {
-        rafRef.current = requestAnimationFrame(tick)
-      }
-    }
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [activeIndex, advanceTo])
-
   const handleSelectProfessor = (idx: number) => {
     if (idx === activeIndex) return
-    cancelAnimationFrame(rafRef.current)
     advanceTo(idx)
   }
-
-  // strokeDashoffset for progress ring: full → 0
-  const ringOffset = RING_CIRCUMFERENCE * (1 - progress)
-  // Counter ring offset (slow background ring)
-  const slowRingCirc = 2 * Math.PI * 48
-  const dashedRingCirc = 2 * Math.PI * 61
 
   return (
     <section
       id="goodwill-message"
       className={`${styles.section} ${glitching ? styles.systemUpdate : ''}`}
-      ref={sectionRef}
     >
       {/* Background target graphic */}
       <div className={styles.targetGraphic} aria-hidden="true">
@@ -166,7 +133,7 @@ const GoodwillMessage: React.FC = () => {
                 <path d="M96.1088 29.061L87.2867 53.5602C93.5341 55.8082 98.9385 59.8207 102.899 65.0028L123.555 49.1558C116.589 40.0658 107.087 33.0146 96.1088 29.061Z" fill="white"/>
               </g>
 
-              {/* PROGRESS ARC — the timer */}
+              {/* STATIC PROGRESS ARC */}
               <circle
                 cx="75.67" cy="85.75"
                 r="54"
@@ -175,13 +142,13 @@ const GoodwillMessage: React.FC = () => {
                 fill="none"
                 strokeLinecap="round"
                 strokeDasharray={RING_CIRCUMFERENCE}
-                strokeDashoffset={ringOffset}
+                strokeDashoffset={0}
                 transform="rotate(-90 75.67 85.75)"
-                className={`${styles.progressRing} ${progress > 0.95 ? styles.progressRingPulse : ''}`}
+                className={styles.progressRing}
                 style={{ filter: glitching ? 'drop-shadow(0 0 8px #BEF3DF) brightness(2)' : undefined }}
               />
 
-              {/* Tick marks around progress ring */}
+              {/* Tick marks around progress ring - Now entirely static */}
               {Array.from({ length: 24 }).map((_, i) => {
                 const angle = (i / 24) * 360 - 90
                 const rad = (angle * Math.PI) / 180
@@ -190,10 +157,9 @@ const GoodwillMessage: React.FC = () => {
                 const y1 = 85.75 + r1 * Math.sin(rad)
                 const x2 = 75.67 + r2 * Math.cos(rad)
                 const y2 = 85.75 + r2 * Math.sin(rad)
-                const filled = (i / 24) <= progress
                 return (
                   <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-                    stroke={filled ? '#BEF3DF' : 'rgba(190,243,223,0.2)'}
+                    stroke="#BEF3DF"
                     strokeWidth={i % 6 === 0 ? 2 : 1}
                   />
                 )

@@ -115,14 +115,14 @@ export default function AboutDepartment() {
               />
             </div>
 
-            <p className="text-[#BEF3DF] text-[13px] lg:text-sm leading-relaxed font-light">
-              <DecryptedText
-                text="Illumine is a biennial reunion event organized by the Department of Information Technology at Jadavpur University. Held every two years, this gathering brings together alumni, current students, and faculty members to celebrate the department's achievements and foster connections within the IT community. Illumine provides a unique platform for former students to reconnect with old friends and mentors, share their career experiences, and contribute to the ongoing development of the department. It also offers current students' valuable opportunities to gain insights from alumni, explore potential career paths, and engage with the broader IT professional community. With its focus on celebrating the department's legacy and future, Illumine is a significant and anticipated occasion for all involved. This time we intend to make the reunion even more special and grand since this year marks the Silver Jubilee of our department"
-                animateOn="view"
-                speed={12}
-                maxIterations={12}
-              />
-            </p>
+            <p className="text-[#BEF3DF] text-[13px] lg:text-sm leading-relaxed font-light text-justify">
+  <DecryptedText
+    text="Illumine is a biennial reunion event organized by the Department of Information Technology at Jadavpur University. Held every two years, this gathering brings together alumni, current students, and faculty members to celebrate the department's achievements and foster connections within the IT community. Illumine provides a unique platform for former students to reconnect with old friends and mentors, share their career experiences, and contribute to the ongoing development of the department. It also offers current students' valuable opportunities to gain insights from alumni, explore potential career paths, and engage with the broader IT professional community. With its focus on celebrating the department's legacy and future, Illumine is a significant and anticipated occasion for all involved. This time we intend to make the reunion even more special and grand since this year marks the Silver Jubilee of our department"
+    animateOn="view"
+    speed={12}
+    maxIterations={12}
+  />
+</p>
 
           </div>
         </div>

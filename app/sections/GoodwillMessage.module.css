@@ -178,19 +178,9 @@
 @keyframes rotateCW  { to { transform: rotate(360deg);  } }
 @keyframes rotateCCW { to { transform: rotate(-360deg); } }
 
-/* ── Progress arc ── */
+/* ── Static Progress arc ── */
 .progressRing {
-  transition: stroke-dashoffset 0.1s linear;
   filter: drop-shadow(0 0 3px rgba(190,243,223,0.6));
-}
-
-/* Glitch-pulse when ring nears completion */
-.progressRingPulse {
-  animation: ringCompletePulse 0.4s ease-in-out infinite alternate;
-}
-@keyframes ringCompletePulse {
-  0%   { filter: drop-shadow(0 0 4px rgba(190,243,223,0.6)); }
-  100% { filter: drop-shadow(0 0 14px rgba(190,243,223,1)) brightness(1.8); }
 }
 
 /* ── Gallery track ── */

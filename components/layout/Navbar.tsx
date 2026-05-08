@@ -9,7 +9,7 @@ import { mechsuit, ttLakes } from './fonts';
 const navLinks = [
   { label: 'HOME', href: '/' },
   { label: 'ABOUT', href: '/#about-illumine' },
-  { label: 'MAGAZINE', href: '/magazine' },
+  { label: 'NEWSLETTER', href: 'https://drive.google.com/file/d/12Mm7dJbenzOH1eOHfEo-tZb07NLZ1k9N/view?usp=sharing', target: '_blank' },
   { label: 'ALUMNI', href: '/alumni' },
   { label: 'CONTACT US', href: '/#footer' },
 ];
@@ -51,9 +51,9 @@ export default function Navbar() {
   />
 
   {/* Illumine Text (UNCHANGED styling) */}
-  <span className="font-mechsuit text-xl tracking-[0.25em] text-white">
-    ILLUMINE
-  </span>
+  <span className="font-mechsuit text-xl tracking-[0.25em] text-white transition-all duration-300 ease-in-out hover:text-[#7B61FF] hover:[text-shadow:0_0_15px_#7B61FF]">
+  ILLUMINE
+</span>
 </div>
 
           {/* 2. DESKTOP LINKS */}
