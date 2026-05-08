@@ -9,7 +9,7 @@ import { mechsuit, ttLakes } from './fonts';
 const navLinks = [
   { label: 'HOME', href: '/' },
   { label: 'ABOUT', href: '/#about-illumine' },
-  { label: 'NEWSLETTER', href: 'https://drive.google.com/file/d/12Mm7dJbenzOH1eOHfEo-tZb07NLZ1k9N/view?usp=sharing', target: '_blank' },
+  { label: 'MAGAZINE', href: '/magazine'},
   { label: 'ALUMNI', href: '/alumni' },
   { label: 'CONTACT US', href: '/#footer' },
 ];
